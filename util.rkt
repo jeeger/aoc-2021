@@ -9,6 +9,8 @@
 (define (test-parse-string parser string)
   (parse-result! (parse-string parser string)))
 
+(define newline/p (char/p #\newline))
+
 (struct point [x y]
   #:transparent
   #:methods gen:custom-write
@@ -40,8 +42,6 @@
   (match-lambda* ((list (point x y) s)
                   (cons (* x s)
                         (* y s)))))
-
-(define newline/p (char/p #\newline))
 
 (provide parse-file test-parse-string newline/p)
 (provide point point-x point-y cross-product dot-product vec- vec+ vec*)
