@@ -1,7 +1,7 @@
 #lang racket/base
 
-(require (only-in "../util.rkt"
-                  point point-x point-y parse-file char->number newline/p))
+(require (only-in "../util.rkt" parse-file char->number newline/p))
+(require "../2dpoint.rkt")
 (require "../minheap.rkt")
 (require "../pointmap.rkt")
 (require (rename-in data/monad [do monad-do]))

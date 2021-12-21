@@ -1,19 +1,11 @@
 #lang racket/base
 (require "../util.rkt")
+(require "../2dpoint.rkt")
 (require megaparsack megaparsack/text)
 (require (rename-in data/monad [do monad-do]))
 (require (only-in data/applicative pure))
 (require racket/match)
 (require racket/stream)
-
-
-(define number/p
-  (monad-do
-   [minus <- (many/p (char/p #\-)#:min 0 #:max 1)]
-   [number <- integer/p]
-   (pure (if (not (null? minus))
-             (- number)
-             number))))
 
 (define coord-range/p
   (monad-do

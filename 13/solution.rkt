@@ -1,6 +1,7 @@
 #!/usr/bin/racket
 #lang racket
 (require "../util.rkt")
+(require "../2dpoint.rkt")
 (require megaparsack megaparsack/text)
 (require (rename-in data/monad [do monad-do]))
 (require data/applicative)
