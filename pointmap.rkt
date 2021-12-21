@@ -1,12 +1,21 @@
 #lang racket
 
-(require "./util.rkt")
+(require "./2dpoint.rkt")
 (require racket/contract)
 
 (struct point-map [sizex sizey data] #:constructor-name -point-map)
 
 (define (make-pointmap sizex sizey)
   (-point-map sizex sizey (make-vector (* sizex sizey))))
+
+(define (list->pointmap l)
+  (let ([result (make-pointmap (length (car l)) (length l))])
+    (for ([y (in-list l)]
+          [yindex (in-range (length l))])
+      (for ([x (in-list y)]
+            [xindex (in-range (length y))])
+        (pointmap-set! result (point xindex yindex) x)))
+    result))
 
 (define point->index
   (match-lambda* [(list (point-map sx _ _) (point x y))
@@ -71,6 +80,7 @@
 
 (provide (contract-out
           [make-pointmap (-> number? number? point-map?)]
+          [list->pointmap (-> (listof (listof any/c)) point-map?)]
           [pointmap-set! (-> point-map? point? any/c point-map?)]
           [pointmap-bounds (-> point-map? (values point? point?))]
           [pointmap-map (-> point-map? (-> any/c any/c) point-map?)]
@@ -79,8 +89,6 @@
           [pointmap-sizey (-> point-map? number?)]
           [pointmap-ref (-> point-map? point? any/c)]
           [pointmap-show (-> point-map? void?)]
+          [pointmap-contains (-> point-map? point? boolean?)]
           [adjacent-diagonal (-> point-map? point? (listof point?))]
           [adjacent (-> point-map? point? (listof point?))]))
-
-
-
